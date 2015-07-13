@@ -9,7 +9,7 @@
     <ul class="dropdown-menu">
         {% for app in webapps %}
             <li>
-                <a href='{{ app.1 }}'>{{ app.0 }}</a>
+                <a href={% url app.1 %}>{{ app.0 }}</a>
             </li>
         {% endfor %}
     </ul>

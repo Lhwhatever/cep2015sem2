@@ -1,0 +1,33 @@
+{% extends "task_index.html" %}
+
+{% block navbarleft %}
+<li><a href={%url 'task_index' %}><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+{% endblock %}
+
+{% block content %}
+{% if task %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">{{ task.title }}</h1>
+    </div>
+    <div class="panel-body">
+        {{ task.content }}
+    </div>
+    <div class="panel-footer">
+        <strong>Target completion by: </strong> {{ task.date_end|date:"Y M d, D, H:i" }}
+    </div>
+</div>
+{% else %}
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h1 class="panel-title">No such task!</h1>
+    </div>
+    <div class="panel-body">
+        There is no task with this ID number.
+    </div>
+    <div class="panel-footer">
+        Return to <a href={%url 'task_index' %}>Task Index</a>.
+    </div>
+</div>
+{% endif%}
+{% endblock %}

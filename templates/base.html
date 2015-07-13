@@ -22,7 +22,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
                 <span class="glyphicon glyphicon-list"></span>
             </button>
-            <a class="navbar-brand" href="#">{% block subdomtitle %}Django Site{% endblock %}</a>
+            <a class="navbar-brand" href={% block brandlink %}{% url 'main_index' %}{% endblock %}>{% block subdomtitle %}Django Site{% endblock %}</a>
         </div>
     
         <div class="collapse navbar-collapse" id="main-navbar-collapse">
