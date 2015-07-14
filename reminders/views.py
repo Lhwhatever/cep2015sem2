@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
+import datetime
 from reminders import models
 
-# Create your views here.
-def index(request, *args):
-    return render(request, "task_index.html", {'tasks': models.Task.objects.all()})
-    
-def task_detail(request, task_id):
-    try:
-        task = models.Task.objects.get(id=task_id)
-        return render(request, "task.html", {'task': task})
-    except models.Task.DoesNotExist:
-        return render(request, "task.html", {'task': None})
+
+class TaskIndexView(ListView):
+    model = models.Task
+    template_name = "task_index.html"
+
+
+class TaskDetailView(DetailView):
+    model = models.Task
+    template_name = "task.html"
+    context_object_name = 'task'

@@ -11,39 +11,55 @@ Reminders
 {% endblock %}
 
 {% block navbarleft %}
-<li class="active"><a href={%url 'task_index' %}><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li class="active"><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
 {% endblock %}
 
 {% block navbarright %}
-<li><a href={%url 'main_index' %}><span class="glyphicon glyphicon-home"></span> Main Site</a></li>
+<li><a href="{%url 'main_index' %}"><span class="glyphicon glyphicon-home"></span> Main Site</a></li>
 <li><a>{% now "Y M d, D, H:i" %}</a></li>
 {% endblock %}
 
 {% block content %}
+{% load humanize %}
 
-<h1>Tasks Index</h1>
-<table class="table table-striped table-condensed">
-    <thead>
-        <tr>
-            <th>Task</th>
-            <th>Target Completion Date</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% if tasks %}
-    {% for task in tasks %}
-        <tr>
-            <td><a href={%url 'task_detail' task.id %}>{{ task.title }}</a></td>
-            <td>{{ task.date_end|date:"Y M d, D, H:i" }}</td>
-        </tr>
-    {% endfor %}
-    {% endif %}
-    </tbody>
-    {% if not tasks %}
-        <tr>
-            <td colspan="2">There are no tasks.</td>
-        </tr>
-    {% endif %}
-</table>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">Task Index</h1>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-condensed">
+            <thead>
+            <tr>
+                <th>Task</span></a></th>
+                <th>Target Completion Date</th>
+                <th>To Completion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if object_list %}
+            {% for task in object_list %}
+            <!-- Individual rows -->
+            <tr class="{{ task.get_associated_class }}">
+                <td><a href="{%url 'task_detail' task.id %}">{{ task.title }}</a></td>
+                <td>{{ task.date_end|date:"Y M d, D, H:i" }}</td>
+                <td><abbr title="{{ task.get_associated_advice }}">{{ task.date_end|naturaltime|capfirst }}</abbr></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+            {% if not object_list %}
+            <!-- No tasks found -->
+            <tfoot>
+                <tr>
+                    <td colspan="3">There are no tasks.</td>
+                </tr>
+            </tfoot>
+            {% endif %}
+        </table>
+    </div>
+    <div class="panel-footer">
+        There {{ object_list|length|pluralize:"is,are" }} {{ object_list|length|apnumber }} task{{ object_list|length|pluralize }} in this list.
+    </div>
+</div>
 
 {% endblock %}

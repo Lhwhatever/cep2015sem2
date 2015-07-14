@@ -15,3 +15,55 @@ body {
 .nonsymbolic {
     list-style-type: none;
 }
+
+.navbar {
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #080808;
+}
+
+.navbar-nav>li {
+    border-bottom: transparent solid 5px;
+}
+
+.navbar-nav>.active>a, .navbar-nav>.active>a:hover, .navbar-nav>.active>a:focus {
+	border-bottom: #39ff14 solid 5px;
+	background-color: #080808;
+}
+
+.dropdown:hover {
+    display: block;
+}
+
+.dropdown-menu {
+	background-color:#222;
+	border-left: 2px solid #444;
+	border-bottom: 2px solid #444;
+	border-right: 2px solid #444;
+}
+.dropdown-menu > li {
+	background-color:#222;
+	border-left: transparent solid 5px;
+}
+.dropdown-menu >li:hover {
+	background-color:#333;
+	border-left: #39ff14 solid 5px;
+}
+.dropdown-menu > li > a {
+	background-color:#222;
+	color: #fff;
+}
+.dropdown-menu > li > a:hover {
+	background-color : #222;
+	color : #fff;
+}
+.dropdown-menu > .active, .dropdown-menu > .active:hover, .dropdown-menu > .active:focus {
+	background-color:#222;
+	border-left: #080808 solid 5px;
+}
+.dropdown-menu>.active>a  {
+	background-color : #222;
+}
+.dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+	background-color : #333;
+}

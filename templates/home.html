@@ -9,7 +9,7 @@
     <ul class="dropdown-menu">
         {% for app in webapps %}
             <li>
-                <a href={% url app.1 %}>{{ app.0 }}</a>
+                <a href="{%url app.1 %}">{{ app.0 }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -23,5 +23,9 @@
 <div class="jumbotron">
     <h1>Welcome!</h1>
     To access an app, please use the navigation bar located above.
+    <h2>Featured</h2>
+    {% with featured_app=webapps|random %}
+        <a href="{%url featured_app.1 %}" class="btn btn-primary">Go to {{ featured_app.0 }} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+    {% endwith %}
 </div>
 {% endblock %}

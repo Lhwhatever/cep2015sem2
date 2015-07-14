@@ -1,4 +1,5 @@
 {% extends "task_index.html" %}
+{% load humanize %}
 
 {% block navbarleft %}
 <li><a href={%url 'task_index' %}><span class="glyphicon glyphicon-check"></span> Task List</a></li>
@@ -6,7 +7,7 @@
 
 {% block content %}
 {% if task %}
-<div class="panel panel-primary">
+<div class="panel panel-{{ task.get_associated_class }}">
     <div class="panel-heading">
         <h1 class="panel-title">{{ task.title }}</h1>
     </div>
@@ -14,7 +15,8 @@
         {{ task.content }}
     </div>
     <div class="panel-footer">
-        <strong>Target completion by: </strong> {{ task.date_end|date:"Y M d, D, H:i" }}
+        This task is {{ task.is_completed|yesno:"c,inc" }}omplete. Completion is scheduled for {{ task.date_end|date:"Y M d, D, H:i" }} ({{ task.date_end|naturaltime }}). <br>
+        <a class="btn btn-primary" href="{%url 'task_index' %}"><span class="glyphicon glyphicon-th-list"></span> Return to Index</a>
     </div>
 </div>
 {% else %}
@@ -26,7 +28,7 @@
         There is no task with this ID number.
     </div>
     <div class="panel-footer">
-        Return to <a href={%url 'task_index' %}>Task Index</a>.
+        Return to <a href="{%url 'task_index' %}">Task Index</a>.
     </div>
 </div>
 {% endif%}
