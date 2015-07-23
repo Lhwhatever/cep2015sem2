@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
     <link rel="stylesheet" type="text/css" href={%static 'bootstrap/css/bootstrap.min.css' %}/>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src={%static 'bootstrap/js/bootstrap.min.js' %}></script>
-    <link rel="stylesheet" type="text/css" href={%static 'styles.css' %}/>
+    <script src="{%static 'jquery-1.11.3.min.js' %}"></script>
+    <script src="{%static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{%static 'styles.css' %}"/>
     <title>{% block tabtitle %}Django Site{% endblock %}</title>
 </head>
 
@@ -21,7 +21,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
                 <span class="glyphicon glyphicon-list"></span>
             </button>
-            <a class="navbar-brand" href={% block brandlink %}{% url 'main_index' %}{% endblock %}>{% block subdomtitle %}Django Site{% endblock %}</a>
+            <a class="navbar-brand" href="{% block brandlink %}{% url 'main_index' %}{% endblock %}">{% block subdomtitle %}Django Site{% endblock %}</a>
         </div>
     
         <div class="collapse navbar-collapse" id="main-navbar-collapse">
