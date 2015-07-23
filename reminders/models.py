@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db import models
 from django.utils import timezone
 import datetime
@@ -11,6 +12,23 @@ class BaseModel(models.Model):
         get_latest_by = ("last_modified",)
 
 
+class TaskTag(BaseModel):
+    """
+    A tag for the task
+    """
+    title = models.CharField("Tag Title", max_length=255)
+    description = models.TextField("Tag Description")
+    color_hex = models.CharField("Tag Color", max_length=7, validators=[
+        RegexValidator(regex=r'#[0-9A-Fa-f]{6}', message="Not a valid color code.")
+    ], default='#ffffff')
+    bgc_hex = models.CharField("Tag Color", max_length=7, validators=[
+        RegexValidator(regex=r'#[0-9A-Fa-f]{6}', message="Not a valid color code.")
+    ], default='#000000')
+
+    def __str__(self):
+        return self.title
+
+
 class Task(BaseModel):
     """
     A task to be completed by the user.
@@ -20,6 +38,7 @@ class Task(BaseModel):
     date_end = models.DateTimeField("Target Date of Completion")
     is_completed = models.BooleanField("Completed")
     time_left = None
+    tags = models.ManyToManyField(TaskTag)
 
     _class_status = ["default", "warning", "danger", "success"]
     _advice_status = ["This task is not complete yet.", "This task should be completed within 24 hours!",

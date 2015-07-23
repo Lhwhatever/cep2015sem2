@@ -12,6 +12,7 @@ Reminders
 
 {% block navbarleft %}
 <li class="active"><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
 {% endblock %}
 
 {% block navbarright %}
@@ -33,6 +34,7 @@ Reminders
                 <th>Task</span></a></th>
                 <th>Target Completion Date</th>
                 <th>To Completion</th>
+                <th>Tags</th>
             </tr>
             </thead>
             <tbody>
@@ -42,7 +44,21 @@ Reminders
             <tr class="{{ task.get_associated_class }}">
                 <td><a href="{%url 'task_detail' task.id %}">{{ task.title }}</a></td>
                 <td>{{ task.date_end|date:"Y M d, D, H:i" }}</td>
-                <td><abbr title="{{ task.get_associated_advice }}">{{ task.date_end|naturaltime|capfirst }}</abbr></td>
+                <td><span data-toggle="tooltip" data-placement="left" title="{{ task.get_associated_advice }}">{{ task.date_end|naturaltime|capfirst }}</span></td>
+                <td>
+                    {% if task.tags.all|length > 3 %}
+                        {% for tag in task.tags.all|slice:":3" %}
+                    <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge">{{ tag }}</a>
+                        {% endfor %}
+                        and {{ task.tags.all|length|add:"-3" }} more.
+                    {% elif task.tags.all|length > 0 %}
+                        {% for tag in task.tags.all %}
+                        <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge">{{ tag }}</a>
+                        {% endfor %}
+                    {% else %}
+                        None.
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
             {% endif %}
@@ -51,7 +67,7 @@ Reminders
             <!-- No tasks found -->
             <tfoot>
                 <tr>
-                    <td colspan="3">There are no tasks.</td>
+                    <td colspan="4">There are no tasks.</td>
                 </tr>
             </tfoot>
             {% endif %}

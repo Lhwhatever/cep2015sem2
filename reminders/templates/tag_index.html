@@ -1,0 +1,45 @@
+{% extends 'task_index.html' %}
+
+{% block navbarleft %}
+<li><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li class="active"><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">Tags Index</h1>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Label</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if object_list %}
+            {% for tag in object_list %}
+            <tr>
+                <td><a href="{%url 'tags_detail' tag.id %}">{{ tag.title }}</a></td>
+                <td><span style="color:{{ tag.color_hex }}; background-color:{{ tag.bgc_hex }}" class="badge">Lorem Ipsum</span></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+            <tfoot>
+            {% if not object_list %}
+            <tr>
+                <td colspan="2">There are no tags.</td>
+            </tr>
+            {% endif %}
+            </tfoot>
+        </table>
+    </div>
+    <div class="panel-footer">
+        There {{ object_list|length|pluralize:"is,are" }} {{ object_list|length|apnumber }} tag{{ object_list|length|pluralize }} in this list.
+    </div>
+</div>
+{% endblock %}

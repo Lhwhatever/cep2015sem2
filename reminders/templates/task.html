@@ -2,11 +2,16 @@
 {% load humanize %}
 
 {% block navbarleft %}
-<li><a href={%url 'task_index' %}><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
 {% endblock %}
 
 {% block content %}
 {% if task %}
+<div class="btn-group" role="group" aria-label="...">
+    <a class="btn btn-primary" href="{%url 'task_index' %}" data-toggle="tooltip" data-placement="bottom" title="Task List"><span class="glyphicon glyphicon-th-list"></span></a>
+</div>
+<br>
 <div class="panel panel-{{ task.get_associated_class }}">
     <div class="panel-heading">
         <h1 class="panel-title">{{ task.title }}</h1>
@@ -16,7 +21,7 @@
     </div>
     <div class="panel-footer">
         This task is {{ task.is_completed|yesno:"c,inc" }}omplete. Completion is scheduled for {{ task.date_end|date:"Y M d, D, H:i" }} ({{ task.date_end|naturaltime }}). <br>
-        <a class="btn btn-primary" href="{%url 'task_index' %}"><span class="glyphicon glyphicon-th-list"></span> Return to Index</a>
+        Tags: {% for tag in task.tags.all %} <a href="{%url 'tags_detail' tag.id %}" style="background-color: {{ tag.bgc_hex }}; color: {{ tag.color_hex }}" class="badge">{{ tag.title }}</a> {% empty %} None. {% endfor %}
     </div>
 </div>
 {% else %}

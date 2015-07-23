@@ -22,8 +22,12 @@ body {
     background-color: #080808;
 }
 
-.navbar-nav>li {
+.navbar-nav>li>a {
     border-bottom: transparent solid 5px;
+}
+
+.navbar-nav>li>a:hover, .navbar-nav>li>a:focus {
+    border-bottom: #f3f315 solid 5px;
 }
 
 .navbar-nav>.active>a, .navbar-nav>.active>a:hover, .navbar-nav>.active>a:focus {
@@ -47,7 +51,7 @@ body {
 }
 .dropdown-menu >li:hover {
 	background-color:#333;
-	border-left: #39ff14 solid 5px;
+	border-left: #f3f315 solid 5px;
 }
 .dropdown-menu > li > a {
 	background-color:#222;

@@ -14,5 +14,8 @@ urlpatterns = patterns(
     #    views.TaskIndexView.as_view(), name='task_index'),
 
     # Task Detail View
-    url(r'^task/(?P<pk>\d+)/+$', views.TaskDetailView.as_view(), name='task_detail')
+    url(r'^task/(?P<pk>\d+)/+$', views.TaskDetailView.as_view(), name='task_detail'),
+
+    url(r'^tags/$', views.TagsIndexView.as_view(), name='tags_index'),
+    url(r'^tags/(?P<pk>\d+)/+$', views.TagsDetailView.as_view(), name='tags_detail'),
 )

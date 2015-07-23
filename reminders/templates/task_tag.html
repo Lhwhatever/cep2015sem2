@@ -1,0 +1,22 @@
+{% extends 'tag_index.html' %}
+
+{% block navbarleft %}
+<li><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="button-group">
+    <a href="{%url 'tags_index' %}" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Tags List"><span class="glyphicon glyphicon-th-list"></span></a>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading" style="color:{{ tag.color_hex }}; background-color:{{ tag.bgc_hex }}">
+        <h1 class="panel-title" style="">{{ tag.title }}</h1>
+    </div>
+    <div class="panel-body">
+        {{ tag.description }}
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
+{% endblock %}

@@ -14,3 +14,14 @@ class TaskDetailView(DetailView):
     model = models.Task
     template_name = "task.html"
     context_object_name = 'task'
+
+
+class TagsIndexView(ListView):
+    model = models.TaskTag
+    template_name = "tag_index.html"
+
+
+class TagsDetailView(DetailView):
+    model = models.TaskTag
+    template_name = "task_tag.html"
+    context_object_name = "tag"
