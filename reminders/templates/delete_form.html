@@ -1,0 +1,11 @@
+{% extends 'base_form.html' %}
+
+{% block formtitle %}
+Delete {{ object.title }}
+{% endblock %}
+
+{% block alert %}
+<div class="alert alert-danger" role="alert">
+    Warning: Deleting {{ object.title }} is irreversible. Are you sure you want to do this?
+</div>
+{% endblock %}

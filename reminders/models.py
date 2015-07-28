@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db import models
 from django.utils import timezone
@@ -18,15 +19,18 @@ class TaskTag(BaseModel):
     """
     title = models.CharField("Tag Title", max_length=255)
     description = models.TextField("Tag Description")
-    color_hex = models.CharField("Tag Color", max_length=7, validators=[
+    color_hex = models.CharField("Color (Foreground)", max_length=7, validators=[
         RegexValidator(regex=r'#[0-9A-Fa-f]{6}', message="Not a valid color code.")
     ], default='#ffffff')
-    bgc_hex = models.CharField("Tag Color", max_length=7, validators=[
+    bgc_hex = models.CharField("Color (Background)", max_length=7, validators=[
         RegexValidator(regex=r'#[0-9A-Fa-f]{6}', message="Not a valid color code.")
     ], default='#000000')
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('tags_detail', kwargs={'pk': self.pk})
 
 
 class Task(BaseModel):
@@ -74,3 +78,6 @@ class Task(BaseModel):
         :return: Appropriate tooltips for the task based on completion status.
         """
         return Task._advice_status[self.get_status_ref_id()]
+
+    def get_absolute_url(self):
+        return reverse('task_detail', kwargs={'pk': self.pk})

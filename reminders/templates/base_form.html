@@ -1,0 +1,58 @@
+{% extends 'task.html' %}
+{% load static %}
+
+{% block content %}
+<script>
+</script>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">{% block formtitle %}Form{% endblock %}</h1>
+    </div>
+    <div class="panel-body">
+        {% block alert %}
+        {% endblock %}
+        <form action="" method="POST" class="form-horizontal">
+            {% csrf_token %}
+
+            <!--<span id="mainform">-->
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    <div class="col-sm-10">
+                        {% if field.help_text %}
+                        <span data-toggle="tooltip" data-placement="left" title="{{ field.help_text }}">
+                            {{ field|escape }}
+                        </span>
+                        {% else %}
+                        {{ field|escape }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <!--</span>-->
+            <div class="btn-group col-sm-offset-2 col-sm-10">
+                <input class="btn btn-success" type="submit">
+                <a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block other %}
+<link rel="stylesheet" type="text/css" href="{% static 'jquery/datetimepicker/jquery.datetimepicker.css' %}"/ >
+<script src="{% static 'jquery/datetimepicker/jquery.datetimepicker.js' %}"></script>
+<script>
+    (function() {
+        $(".datetimepicker").datetimepicker();
+        $("label").addClass("col-sm-2 control-label");
+        $(".form-group>div>input, .form-group>div>textarea, .form-group>div>select").addClass("form-control");
+        $(".form-group>div>input[type=checkbox]").removeClass("form-control").parent().addClass("checkbox");
+        $(".form-group>div>input[type=color]").parent().removeClass("col-sm-10").addClass("col-sm-1");
+
+        $(".form-group>div>input[type=text]").attr("placeholder", "Input text here. (Maximum 255 characters)");
+        $(".form-group>div>textarea").attr("placeholder", "Input text here.");
+    })();
+</script>
+{% endblock %}

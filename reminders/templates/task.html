@@ -8,9 +8,7 @@
 
 {% block content %}
 {% if task %}
-<div class="btn-group" role="group" aria-label="...">
-    <a class="btn btn-primary" href="{%url 'task_index' %}" data-toggle="tooltip" data-placement="bottom" title="Task List"><span class="glyphicon glyphicon-th-list"></span></a>
-</div>
+
 <br>
 <div class="panel panel-{{ task.get_associated_class }}">
     <div class="panel-heading">
@@ -20,8 +18,15 @@
         {{ task.content }}
     </div>
     <div class="panel-footer">
-        This task is {{ task.is_completed|yesno:"c,inc" }}omplete. Completion is scheduled for {{ task.date_end|date:"Y M d, D, H:i" }} ({{ task.date_end|naturaltime }}). <br>
+        This task is {{ task.is_completed|yesno:"c,inc" }}omplete. Completion is scheduled for {{ task.date_end|date:"Y M d, D, H:i" }} ({{ task.date_end|naturaltime }}).
+        <br><br>
         Tags: {% for tag in task.tags.all %} <a href="{%url 'tags_detail' tag.id %}" style="background-color: {{ tag.bgc_hex }}; color: {{ tag.color_hex }}" class="badge">{{ tag.title }}</a> {% empty %} None. {% endfor %}
+        <br><br>
+        <div class="btn-group" role="group" aria-label="...">
+            <a class="btn btn-primary" href="{%url 'task_index' %}" data-toggle="tooltip" data-placement="bottom" title="Task List"><span class="glyphicon glyphicon-th-list"></span></a>
+            <a href="{%url 'task_update' task.id %}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><span class="glyphicon glyphicon-asterisk"></span></a>
+            <a href="{%url 'task_delete' task.id %}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+        </div>
     </div>
 </div>
 {% else %}
@@ -33,7 +38,9 @@
         There is no task with this ID number.
     </div>
     <div class="panel-footer">
-        Return to <a href="{%url 'task_index' %}">Task Index</a>.
+        <div class="btn-group" role="group" aria-label="...">
+            <a class="btn btn-primary" href="{%url 'task_index' %}" data-toggle="tooltip" data-placement="bottom" title="Task List"><span class="glyphicon glyphicon-th-list"></span></a>
+        </div>
     </div>
 </div>
 {% endif%}
