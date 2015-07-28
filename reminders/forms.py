@@ -9,8 +9,8 @@ class TagForm(forms.ModelForm):
         model = models.TaskTag
         fields = '__all__'
         widgets = {
-            'color_hex': forms.TextInput(attrs={'type': 'color'}),
-            'bgc_hex': forms.TextInput(attrs={'type': 'color'}),
+            'color_hex': forms.TextInput(attrs={'class': 'colorpicker-child'}),
+            'bgc_hex': forms.TextInput(attrs={'class': 'colorpicker-child'}),
         }
 
 

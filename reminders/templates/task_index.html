@@ -57,7 +57,7 @@ Reminders
                         {% for tag in task.tags.all|slice:":3" %}
                     <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge">{{ tag }}</a>
                         {% endfor %}
-                        <span data-toggle="tooltip" data-placement="bottom" title="Showing 3 out of {{ task.tags.all|length }}. Click the task name to list the other tags.">(+{{ task.tags.all|length|add:"-3" }})</span>
+                        <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Showing 3 out of {{ task.tags.all|length }}. Click the task name to list the other tags.">+{{ task.tags.all|length|add:"-3" }}</span>
                     {% elif task.tags.all|length > 0 %}
                         {% for tag in task.tags.all %}
                         <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge">{{ tag }}</a>
