@@ -18,6 +18,7 @@ class TaskTag(BaseModel):
     A tag for the task
     """
     title = models.CharField("Tag Title", max_length=255)
+    abbrev = models.CharField("Abbreviation", max_length=16)
     description = models.TextField("Tag Description")
     color_hex = models.CharField("Color (Foreground)", max_length=7, validators=[
         RegexValidator(regex=r'#[0-9A-Fa-f]{6}', message="Not a valid color code.")

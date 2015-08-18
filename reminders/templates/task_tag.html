@@ -7,8 +7,9 @@
 
 {% block content %}
 <div class="panel panel-primary">
-    <div class="panel-heading" style="color:{{ tag.color_hex }}; background-color:{{ tag.bgc_hex }}">
+    <div class="panel-heading">
         <h1 class="panel-title" style="">{{ tag.title }}</h1>
+        <span class="badge" style="color:{{ tag.color_hex }}; background-color:{{ tag.bgc_hex }}">{{ tag.abbrev }}</span>
     </div>
     <div class="panel-body">
         {{ tag.description }}

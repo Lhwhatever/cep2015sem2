@@ -29,7 +29,7 @@
             {% for tag in object_list %}
             <tr>
                 <td><a href="{%url 'tags_detail' tag.id %}">{{ tag.title }}</a></td>
-                <td><span style="color:{{ tag.color_hex }}; background-color:{{ tag.bgc_hex }}" class="badge">{{ tag.title }}</span></td>
+                <td><span style="color:{{ tag.color_hex }}; background-color:{{ tag.bgc_hex }}" class="badge">{{ tag.abbrev }}</span></td>
                 <td class="tagoptions collapse"><div class="btn-group">
                     <a href="{%url 'tags_update' tag.id %}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><span class="glyphicon glyphicon-asterisk"></span></a>
                     <a href="{%url 'tags_delete' tag.id %}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>

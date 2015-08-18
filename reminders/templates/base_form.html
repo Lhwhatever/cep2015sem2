@@ -16,6 +16,15 @@
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
+                    {% if field.field.widget|fieldtype = 'CheckboxInput' %}
+                    <div class="col-xs-offset-0 col-sm-offset-1 col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                {{ field }} {{ field.label }}
+                            </label>
+                        </div>
+                    </div>
+                    {% else %}
                     {{ field.label_tag }}
                     <div class="col-sm-9 input-group">
                         {% if field.help_text %}
@@ -29,6 +38,7 @@
                             <i></i>
                         </span>
                     </div>
+                    {% endif %}
                 </div>
             {% endfor %}
             <div class="btn-group col-sm-offset-2 col-sm-9">
@@ -45,19 +55,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/colorpicker/css/bootstrap-colorpicker.css' %}"  >
 <script src="{% static 'plugins/datetimepicker/jquery.datetimepicker.js' %}"></script>
 <script src="{% static 'plugins/colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+<script src="{% static 'form.js' %}"></script>
 <script>
-    (function() {
-        $(".datetimepicker").datetimepicker();
-        $("label").addClass("col-sm-2 control-label");
-        $(".form-group>div>input, .form-group>div>textarea, .form-group>div>select").addClass("form-control");
-        $(".form-group>div>input[type=checkbox]").removeClass("form-control").parent().addClass("checkbox");
-
-        $(".form-group>div>input[type=text]").attr("placeholder", "Input text here. (Maximum 255 characters)");
-        $(".form-group>div>.colorpicker-child").parent().removeClass("col-sm-10").addClass("colorpicker col-sm-4");
-        $(".colorpicker>.temp").addClass("input-group-addon");
-        $(".colorpicker").attr("placeholder", "Input color hex code.");
-        $(".colorpicker").colorpicker();
-        $(".form-group>div>textarea").attr("placeholder", "Input text here.");
-    })();
+    setup();
 </script>
 {% endblock %}
