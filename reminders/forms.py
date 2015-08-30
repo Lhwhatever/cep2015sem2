@@ -9,6 +9,7 @@ class TagForm(forms.ModelForm):
         model = models.TaskTag
         fields = '__all__'
         widgets = {
+            'owner': forms.HiddenInput(),
             'color_hex': forms.TextInput(attrs={'class': 'colorpicker-child'}),
             'bgc_hex': forms.TextInput(attrs={'class': 'colorpicker-child'}),
         }
@@ -20,5 +21,6 @@ class TaskForm(forms.ModelForm):
         model = models.Task
         fields = '__all__'
         widgets = {
+            'owner': forms.HiddenInput(),
             'date_end': forms.DateTimeInput(attrs={'class': 'datetimepicker', 'required': True}),
         }

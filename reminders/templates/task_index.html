@@ -1,23 +1,9 @@
-{% extends "base.html" %}
+{% extends 'navbar.html' %}
 
 {% block tabtitle %}Reminders{% endblock %}
 
 {% block subdomtitle %}
 Reminders
-{% endblock %}
-
-{% block brandlink %}
-{% url 'task_index' %}
-{% endblock %}
-
-{% block navbarleft %}
-<li class="active"><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
-<li><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
-{% endblock %}
-
-{% block navbarright %}
-<li><a href="{%url 'main_index' %}"><span class="glyphicon glyphicon-home"></span> Main Site</a></li>
-<li><a>{% now "Y M d, D, H:i" %}</a></li>
 {% endblock %}
 
 {% block content %}
@@ -37,11 +23,12 @@ Reminders
         <table class="table table-striped table-condensed">
             <thead>
             <tr>
-                <th>Task</span></a></th>
+                <th>Task</a></th>
                 <th>Target Completion Date</th>
                 <th>To Completion</th>
                 <th>Tags</th>
-                <th class="taskoptions collapse">Options</th>
+                <th>Owner</th>
+                <th class="taskoptions collapse no-transition">Options</th>
             </tr>
             </thead>
             <tbody>
@@ -55,19 +42,22 @@ Reminders
                 <td>
                     {% if task.tags.all|length > 3 %}
                         {% for tag in task.tags.all|slice:":3" %}
-                    <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge">{{ tag }}</a>
+                    <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge" data-toggle="tooltip" data-placement="bottom" title="{{ tag }}">{{ tag.abbrev }}</a>
                         {% endfor %}
                         <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Showing 3 out of {{ task.tags.all|length }}. Click the task name to list the other tags.">+{{ task.tags.all|length|add:"-3" }}</span>
                     {% elif task.tags.all|length > 0 %}
                         {% for tag in task.tags.all %}
-                        <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge">{{ tag }}</a>
+                        <a href="{%url 'tags_detail' tag.id %}" style="background-color:{{ tag.bgc_hex }}; color:{{ tag.color_hex }}" class="badge" data-toggle="tooltip" data-placement="bottom" title="{{ tag }}">{{ tag.abbrev }}</a>
                         {% endfor %}
                     {% else %}
                         None.
                     {% endif %}
                 </td>
-                <td class="taskoptions collapse"><div class="btn-group">
-                    <a href="{%url 'task_update' task.id %}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><span class="glyphicon glyphicon-asterisk"></span></a>
+                <td>
+                    {{ task.owner.user }}
+                </td>
+                <td class="taskoptions collapse no-transition"><div class="btn-group">
+                    <a href="{%url 'task_update' task.id %}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><span class="glyphicon glyphicon-cog"></span></a>
                     <a href="{%url 'task_delete' task.id %}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                 </div></td>
             </tr>
@@ -78,7 +68,7 @@ Reminders
             <!-- No tasks found -->
             <tfoot>
                 <tr>
-                    <td colspan="5">There are no tasks.</td>
+                    <td colspan="5" class="no-transition">There are no tasks.</td>
                 </tr>
             </tfoot>
             {% endif %}
