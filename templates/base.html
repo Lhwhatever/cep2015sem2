@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+{% block body %}
 <nav class="navbar navbar-inverse">
     <div class="container-fluid navbar-container">
         <div class="navbar-header">
@@ -34,22 +34,71 @@
             <ul class="nav navbar-nav navbar-right">
                 {% block navbarright %}
                 {% endblock %}
+                {% if curruser.user %}
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ curruser.user }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="width: auto; min-width: 192px">
+                        <li><a href="{% url 'profile' %}">Profile <span class="pull-right glyphicon glyphicon-user"></span></a></li>
+                        {% if curruser.user.is_superuser %}
+                        <li><a href="{% url 'admin:index' %}">Django Admin <span class="pull-right glyphicon glyphicon-wrench"></span></a></li>
+                        {% endif %}
+                        <li><a href="#" type="button" data-toggle="modal" data-target="#logoutModal">Logout <span class="pull-right glyphicon glyphicon-log-out"></span></a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Not logged in<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'login' %}">Login <span class="pull-right glyphicon glyphicon-log-in"></span></a></li>
+                        <li><a href="{% url 'register' %}">Register <span class="pull-right glyphicon glyphicon-plus"></span></a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                <li class="navbar-text">{% now 'SHORT_DATETIME_FORMAT' %}</li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container-fluid content-root">
+
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
+        <span id="message">
+        </span>
+    </div>
+
     {% block content %}
 
     {% endblock %}
 </div>
 
+{% endblock %}
+
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal" aria-labelledby="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></a>
+                <h4>Logout confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to logout?
+                <div class="btn-group" style="float:right">
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout <span class="glyphicon glyphicon-log-out"></span></a>
+                    <a href="{% url 'relog' %}" class="btn btn-warning">Log into another account <span class="glyphicon glyphicon-repeat"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'messages.js' %}"></script>
+{% block message_script %}
 <script>
-    $(function() {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+    $(document).ready(function() { messages.addInfo('{{ message }}') });
 </script>
+{% endblock %}
 
 </body>
 

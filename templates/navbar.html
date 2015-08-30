@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block navbarleft %}
+{% if app == 'home' %}
+<li><a href="{% url 'task_index' %}">Reminders</a></li>
+{% elif app == 'reminders' %}
+<li><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
+<li><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
+{% endif %}
+{% endblock %}
+
+{% block navbarright %}
+<li><a href="{%url 'main_index' %}"><span class="glyphicon glyphicon-home"></span> Main Site</a></li>
+{% endblock %}
+
+{% block brandlink %}
+{% if app == 'reminders' %}
+{% url 'task_index' %}
+{% endif %}
+{% endblock %}
+
+{% block subdomtitle %}
+{% if app == 'reminders' %}
+Reminders
+{% elif app == 'home' %}
+Django Site
+{% endif %}
+{% endblock %}
+
+{% block tabtitle %}
+{% if app == 'reminders' %}
+Reminders
+{% elif app == 'home' %}
+Django Site
+{% endif %}
+{% endblock %}

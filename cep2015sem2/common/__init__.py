@@ -1,1 +1,1 @@
-from cep2015sem2.common import templates, views
+from . import templates, views

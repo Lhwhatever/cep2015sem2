@@ -1,11 +1,6 @@
 {% extends "task_index.html" %}
 {% load humanize %}
 
-{% block navbarleft %}
-<li><a href="{%url 'task_index' %}"><span class="glyphicon glyphicon-check"></span> Task List</a></li>
-<li><a href="{%url 'tags_index' %}"><span class="glyphicon glyphicon-tags"></span> Tags List</a></li>
-{% endblock %}
-
 {% block content %}
 {% if task %}
 
@@ -20,11 +15,28 @@
     <div class="panel-footer">
         This task is {{ task.is_completed|yesno:"c,inc" }}omplete. Completion is scheduled for {{ task.date_end|date:"Y M d, D, H:i" }} ({{ task.date_end|naturaltime }}).
         <br><br>
-        Tags: {% for tag in task.tags.all %} <a href="{%url 'tags_detail' tag.id %}" style="background-color: {{ tag.bgc_hex }}; color: {{ tag.color_hex }}" class="badge">{{ tag.title }}</a> {% empty %} None. {% endfor %}
+        <table border="0">
+            <thead>
+                <tr>
+                    <th style="padding-right:100px"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Owner</th>
+                    <td>{{ task.owner.user }}</td>
+                </tr>
+                <tr>
+                    <th>Tags</th>
+                    <td>{% for tag in task.tags.all %} <a href="{%url 'tags_detail' tag.id %}" style="background-color: {{ tag.bgc_hex }}; color: {{ tag.color_hex }}" class="badge" data-toggle="tooltip" data-placement="bottom" title="{{ tag.title }}">{{ tag.abbrev }}</a> {% empty %} None. {% endfor %}</td>
+                </tr>
+            </tbodY>
+        </table>
         <br><br>
         <div class="btn-group" role="group" aria-label="...">
             <a class="btn btn-primary" href="{%url 'task_index' %}" data-toggle="tooltip" data-placement="bottom" title="Task List"><span class="glyphicon glyphicon-th-list"></span></a>
-            <a href="{%url 'task_update' task.id %}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><span class="glyphicon glyphicon-asterisk"></span></a>
+            <a href="{%url 'task_update' task.id %}" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><span class="glyphicon glyphicon-cog"></span></a>
             <a href="{%url 'task_delete' task.id %}" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
         </div>
     </div>
