@@ -48,7 +48,7 @@ class RelogView(generic.View):
 
 
 class RegisterView(generic.TemplateView):
-    template_name = 'registration\\register.html'
+    template_name = 'registration/register.html'
     app = 'home'
 
     user_form = forms.UserForm
